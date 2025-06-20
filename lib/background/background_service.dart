@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'dart:ui';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_background_service/flutter_background_service.dart';
+import 'package:socket/notification/local_notification_service.dart';
 
 // Move the callback functions outside the class as top-level functions
 @pragma('vm:entry-point')
@@ -27,15 +28,17 @@ void onStart(ServiceInstance service) async {
 
   service.invoke('update', {'message': 'Đây là dữ liệu từ background'});
 
-  service.on('update').listen((event) {
+  service.on('update').listen((event) async {
     log('event Update');
     log('Service still running... ${event.toString()}');
+
+    //! background nhan thong bao -> hien thong bao
   });
 }
 
 class BackgroundService {
   BackgroundService._internal();
-  static BackgroundService _instance = BackgroundService._internal();
+  static final BackgroundService _instance = BackgroundService._internal();
 
   factory BackgroundService() {
     return _instance;

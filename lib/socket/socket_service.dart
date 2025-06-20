@@ -2,6 +2,7 @@
 import 'dart:developer';
 
 import 'package:socket/const/url.dart';
+import 'package:socket/notification/local_notification_service.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
 
 class SocketService {
@@ -54,7 +55,13 @@ class SocketService {
   }
 
   void _setupSocketListeners() {
-    _socket.onConnect((_) {
+    // _socket.onconnect(id, pid)
+    _socket.onConnect((_) async {
+      await LocalNotificationService().showNotification(
+        id: 8,
+        title: 'socket',
+        body: 'ket noi socket thanh cong',
+      );
       log('Socket connected');
       _socket.emit('join', {'room': 'flutter_room'});
     });

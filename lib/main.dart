@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:socket/background/background_service.dart';
+import 'package:socket/notification/local_notification_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -32,8 +34,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -45,7 +45,30 @@ class _MyHomePageState extends State<MyHomePage> {
               onPressed: () {},
               child: Text("chạy background && connect socket"),
             ),
-            ElevatedButton(onPressed: () {}, child: Text("send event")),
+            ElevatedButton(
+              onPressed: () {
+                FlutterBackgroundService().invoke('update', {
+                  'event': 'chat_message',
+                  'data': {'text': 'Xin chào từ UI'},
+                });
+              },
+              child: Text("send background -> tao event -> socketIO"),
+            ),
+
+            ElevatedButton(
+              onPressed: () async {
+                // final res =
+                await LocalNotificationService().requestPermissions();
+                await LocalNotificationService().showNotification(
+                  id: 4,
+                  title: '2',
+                  body: '55',
+                );
+                // await LocalNotificationService()
+                //     .cancelAllNotifications();
+              },
+              child: Text("thong bao"),
+            ),
           ],
         ),
       ),
