@@ -32,15 +32,15 @@
 
 //   service.invoke('update', {'message': 'Đây là dữ liệu từ background'});
 
-//   service.on('update').listen((event) {
-//     log('event Update');
-//     log('Service still running... ${event.toString()}');
-//   });
-// }
+  service.on('update').listen((event) {
+    log('event Update');
+    log('Service still running... ${event.toString()}');
+  });
+}
 
-// class BackgroundService {
-//   BackgroundService._internal();
-//   static BackgroundService _instance = BackgroundService._internal();
+class BackgroundService {
+  BackgroundService._internal();
+  static BackgroundService _instance = BackgroundService._internal();
 
 //   factory BackgroundService() {
 //     return _instance;

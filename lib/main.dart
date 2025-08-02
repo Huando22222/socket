@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_background_service/flutter_background_service.dart';
 import 'package:socket/background/background_service.dart';
 import 'package:socket/socket/socket_service.dart';
 
@@ -46,13 +47,6 @@ class _MyHomePageState extends State<MyHomePage> {
                 await backgroundService.initializeService();
               },
               child: Text("chạy background && connect socket"),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                //
-                SocketService().connect();
-              },
-              child: Text("connect"),
             ),
             ElevatedButton(onPressed: () {}, child: Text("send event")),
           ],

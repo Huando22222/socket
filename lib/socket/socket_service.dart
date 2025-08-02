@@ -108,11 +108,11 @@
 // //     }
 // //   }
 
-// //   void _setupSocketListeners() {
-// //     _socket.onConnect((_) {
-// //       log('Socket connected');
-// //       _socket.emit('join', {'room': 'flutter_room'});
-// //     });
+  void _setupSocketListeners() {
+    _socket.onConnect((_) {
+      log('Socket connected');
+      _socket.emit('join', {'room': 'flutter_room'});
+    });
 
 // //     _socket.on('your_event', (data) {
 // //       log('Received data: $data');
