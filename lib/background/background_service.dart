@@ -1,68 +1,73 @@
-// lib/background/background_service.dart
-import 'dart:developer';
-import 'dart:ui';
-import 'package:flutter/widgets.dart';
-import 'package:flutter_background_service/flutter_background_service.dart';
+// // lib/background/background_service.dart
+// import 'dart:developer';
+// import 'dart:ui';
+// import 'package:flutter/widgets.dart';
+// import 'package:flutter_background_service/flutter_background_service.dart';
+// import 'package:socket/socket/socket_service.dart';
 
-// Move the callback functions outside the class as top-level functions
-@pragma('vm:entry-point')
-Future<bool> onIosBackground(ServiceInstance service) async {
-  WidgetsFlutterBinding.ensureInitialized();
-  DartPluginRegistrant.ensureInitialized();
+// // Move the callback functions outside the class as top-level functions
+// @pragma('vm:entry-point')
+// Future<bool> onIosBackground(ServiceInstance service) async {
+//   WidgetsFlutterBinding.ensureInitialized();
+//   DartPluginRegistrant.ensureInitialized();
 
-  return true;
-}
+//   return true;
+// }
 
-@pragma('vm:entry-point')
-void onStart(ServiceInstance service) async {
-  log('onstart bg service');
-  if (service is AndroidServiceInstance) {
-    service.on('stopService').listen((event) {
-      service.stopSelf();
-    });
-  }
+// @pragma('vm:entry-point')
+// void onStart(ServiceInstance service) async {
+//   log('onstart bg service');
 
-  // Kết nối socket
-  // SocketService().connect();
+//   log("start socket1");
+//   SocketService().connect();
+//   log("start socket2");
+//   if (service is AndroidServiceInstance) {
+//     service.on('stopService').listen((event) {
+//       service.stopSelf();
+//     });
+//   }
 
-  service.invoke('update', {'message': 'Đây là dữ liệu từ background'});
+//   // Kết nối socket
+//   // SocketService().connect();
 
-  service.on('update').listen((event) {
-    log('event Update');
-    log('Service still running... ${event.toString()}');
-  });
-}
+//   service.invoke('update', {'message': 'Đây là dữ liệu từ background'});
 
-class BackgroundService {
-  BackgroundService._internal();
-  static BackgroundService _instance = BackgroundService._internal();
+//   service.on('update').listen((event) {
+//     log('event Update');
+//     log('Service still running... ${event.toString()}');
+//   });
+// }
 
-  factory BackgroundService() {
-    return _instance;
-  }
+// class BackgroundService {
+//   BackgroundService._internal();
+//   static BackgroundService _instance = BackgroundService._internal();
 
-  Future<void> initializeService() async {
-    log('message1');
-    final service = FlutterBackgroundService();
-    log('message2');
-    await service.configure(
-      androidConfiguration: AndroidConfiguration(
-        autoStart: true,
-        onStart: onStart,
-        isForegroundMode: false,
-        autoStartOnBoot: true,
-        // notificationChannelId: 'my_foreground',
-        // initialNotificationTitle: 'Flutter Background Service',
-        // initialNotificationContent: 'Service is running',
-      ),
-      iosConfiguration: IosConfiguration(
-        autoStart: true,
-        onForeground: onStart,
-        onBackground: onIosBackground,
-      ),
-    );
-    log('message3');
-    service.startService();
-    log('message4');
-  }
-}
+//   factory BackgroundService() {
+//     return _instance;
+//   }
+
+//   Future<void> initializeService() async {
+//     log('message1');
+//     final service = FlutterBackgroundService();
+//     log('message2');
+//     await service.configure(
+//       androidConfiguration: AndroidConfiguration(
+//         autoStart: true,
+//         onStart: onStart,
+//         isForegroundMode: false,
+//         autoStartOnBoot: true,
+//         // notificationChannelId: 'my_foreground',
+//         // initialNotificationTitle: 'Flutter Background Service',
+//         // initialNotificationContent: 'Service is running',
+//       ),
+//       iosConfiguration: IosConfiguration(
+//         autoStart: true,
+//         onForeground: onStart,
+//         onBackground: onIosBackground,
+//       ),
+//     );
+//     log('message3');
+//     service.startService();
+//     log('message4');
+//   }
+// }

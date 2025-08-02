@@ -1,3 +1,3 @@
 class Url {
-  static final socketUrl = "http://yourserver.com";
+  static final socketUrl = "ws://api.ltc365.com/hub/notify";
 }

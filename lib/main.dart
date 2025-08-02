@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:socket/background/background_service.dart';
+import 'package:socket/socket/socket_service.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await BackgroundService().initializeService();
+  // await BackgroundService().initializeService();
   await SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
   runApp(const MyApp());
 }
@@ -32,8 +33,6 @@ class MyHomePage extends StatefulWidget {
 }
 
 class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -42,8 +41,18 @@ class _MyHomePageState extends State<MyHomePage> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             ElevatedButton(
-              onPressed: () {},
+              onPressed: () async {
+                final BackgroundService backgroundService = BackgroundService();
+                await backgroundService.initializeService();
+              },
               child: Text("chạy background && connect socket"),
+            ),
+            ElevatedButton(
+              onPressed: () {
+                //
+                SocketService().connect();
+              },
+              child: Text("connect"),
             ),
             ElevatedButton(onPressed: () {}, child: Text("send event")),
           ],
